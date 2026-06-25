@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Trip Planner - June 28 - July 11, 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .nav {
+            display: flex;
+            overflow-x: auto;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav button {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            transition: all 0.2s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav button:hover {
+            background: #f1f5f9;
+            color: #0ea5e9;
+        }
+
+        .nav button.active {
+            color: #0ea5e9;
+            border-bottom-color: #0ea5e9;
+            background: white;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #0ea5e9;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        h3 {
+            color: #1e40af;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card-highlight {
+            background: #f0f9ff;
+            border-left: 3px solid #0ea5e9;
+        }
+
+        .card-warning {
+            background: #fffbeb;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .card-success {
+            background: #f0fdf4;
+            border-left: 3px solid #10b981;
+        }
+
+        .schedule {
+            margin: 10px 0;
+        }
+
+        .schedule-item {
+            display: flex;
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 8px;
+            align-items: flex-start;
+        }
+
+        .time {
+            font-weight: 600;
+            color: #0369a1;
+            min-width: 100px;
+            font-size: 14px;
+            margin-right: 16px;
+        }
+
+        .activity {
+            flex: 1;
+        }
+
+        .activity strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .activity small {
+            color: #666;
+            font-size: 12px;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            color: #0ea5e9;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .emoji {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .decision-helper {
+            background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+
+        .decision-helper h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .question {
+            background: rgba(255,255,255,0.25);
+            padding: 18px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option {
+            flex: 1;
+            min-width: 100px;
+            padding: 14px 12px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1e40af;
+        }
+
+        .option:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-color: white;
+        }
+
+        .option.selected {
+            background: white;
+            color: #0ea5e9;
+            border-color: #0ea5e9;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            font-weight: 600;
+        }
+
+        .btn {
+            background: white;
+            color: #0ea5e9;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .result {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tag {
+            display: inline-block;
+            background: #0ea5e9;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 5px 5px 5px 0;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .nav button {
+                min-width: 100px;
+                font-size: 12px;
+                padding: 12px 8px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗽 NY Trip Planner</h1>
+            <p>June 28 - July 11, 2026 • Merrick, Long Island</p>
+        </div>
+
+        <div class="nav">
+            <button class="nav-btn active" data-section="overview">Overview</button>
+            <button class="nav-btn" data-section="calendar">📅 Calendar</button>
+            <button class="nav-btn" data-section="decide">What Today?</button>
+            <button class="nav-btn" data-section="options">Options Menu</button>
+            <button class="nav-btn" data-section="nyc1">NYC Day 1</button>
+            <button class="nav-btn" data-section="nyc2">NYC Day 2</button>
+            <button class="nav-btn" data-section="beach">Beach</button>
+            <button class="nav-btn" data-section="family">Family</button>
+            <button class="nav-btn" data-section="reference">Quick Ref</button>
+        </div>
+
+        <div class="content">
+            <!-- OVERVIEW SECTION -->
+            <div class="section active" id="overview">
+                <h2>Trip Overview</h2>
+
+                <div class="card card-highlight">
+                    <strong>📅 Dates:</strong> June 28 - July 11, 2026 (14 days)<br>
+                    <strong>📍 Location:</strong> Staying in Merrick, Long Island<br>
+                    <strong>👨‍👩‍👧‍👧 Family:</strong> You, Michelle, daughters (5.5yo & 2.5yo)
+                </div>
+
+                <h3>Daily Rhythm</h3>
+                <div class="card">
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">8-9am</span>
+                            <div class="activity">
+                                <strong>Pickleball (optional)</strong>
+                                <small>One parent plays ~1.5hrs, other stays with kids</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9am-12pm</span>
+                            <div class="activity">
+                                <strong>Morning Activity</strong>
+                                <small>ONE thing max: Beach, NYC, attraction, or stay home</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30-2:30pm</span>
+                            <div class="activity">
+                                <strong>NAP TIME ⚠️</strong>
+                                <small>2.5yo naps at home (protected time!)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">3-6pm</span>
+                            <div class="activity">
+                                <strong>Pool Time 🏊</strong>
+                                <small>Default afternoon plan - relaxing!</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">6-8pm</span>
+                            <div class="activity">
+                                <strong>Dinner & Family Time</strong>
+                                <small>Relax, play, wind down</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🔒 Locked Dates</h3>
+                <div class="card card-warning">
+                    <strong>June 30 (Tue):</strong> NYC Trip #1 - Train to NYC (Carmella or Jeremy)<br>
+                    <strong>July 1 (Wed):</strong> Erica visit - Short catch-up in Long Beach<br>
+                    <strong>July 2 (Thu):</strong> NYC Trip #2 + Eda arrives 5:40pm!<br>
+                    <strong>July 4 (Sat):</strong> July 4th - Split between Michelle's dad & Eda<br>
+                    <strong>July 5 (Sun):</strong> Michelle's dad has plans (not available)<br>
+                    <strong>July 6 (Mon):</strong> Jones Beach + Air Show - FIXED (full family day)<br>
+                    <strong>July 10 (Fri):</strong> Long Beach - Michelle & Justine sisters trip (9am-2pm)
+                </div>
+
+                <h3>Two-Week Goals</h3>
+                <div class="card card-success">
+                    <ul>
+                        <li>✅ <strong>See Erica!</strong> (July 1 confirmed)</li>
+                        <li>✅ <strong>2 NYC day trips</strong> (June 30 & July 2 confirmed)</li>
+                        <li><strong>Time with Eda</strong> (July 3-7 + morning July 8)</li>
+                        <li>✅ <strong>Home's Beach + Air Show</strong> (July 6 LOCKED)</li>
+                        <li>✅ <strong>Long Beach sisters trip</strong> (July 10 confirmed)</li>
+                        <li><strong>Adults dinner out</strong> (Eda, Bill, Michelle, you, Justine, Camillo - one evening July 3-7)</li>
+                        <li><strong>Visit Aunt Megan</strong> (Garden City - 15 min drive, easy to fit in)</li>
+                        <li><strong>Visit Aunt Nancy</strong> (Southampton - 1.5-2 hr drive, full day trip)</li>
+                        <li><strong>2-3 Jones Beach days</strong> (weather dependent)</li>
+                        <li><strong>Pickleball 2x minimum</strong> (up to 5x/week)</li>
+                        <li><strong>Multiple Justine family visits</strong> (pool days, her house)</li>
+                        <li><strong>LI friends:</strong> Jamie, Christin (if time: Jenna)</li>
+                        <li><strong>Pool most afternoons</strong> (built-in fun!)</li>
+                        <li><strong>Rest days</strong> (important!)</li>
+                    </ul>
+                </div>
+
+                <h3>Family Connections</h3>
+                <div class="card">
+                    <strong>Eda (Michelle's Mom) + Bill:</strong> July 3-7 + morning of July 8 (from FL)<br>
+                    - July 4: Split time between her & Michelle's dad<br>
+                    - July 5: Michelle's dad has plans (focus on Eda & Bill)<br>
+                    - One adults dinner out (Eda, Bill, Michelle, you, Justine, Camillo)
+                    <br><br>
+                    <strong>Justine (Michelle's sister) + Camillo:</strong>
+                    <ul>
+                        <li>Alanna (8.5yo) - great playmate for your 5.5yo!</li>
+                        <li>Jonathan (2yo) - perfect playmate for your 2.5yo!</li>
+                        <li>Plan: Multiple pool days together, visits</li>
+                        <li>July 10: Long Beach sisters trip (Michelle & Justine only, 9am-2pm)</li>
+                    </ul>
+                    <strong>Michelle's Dad:</strong> Staying at his house (where you are)
+                    <ul>
+                        <li>Pickleball partner (min 2x, up to 5x/week)</li>
+                        <li>July 4th split time</li>
+                        <li>July 5th: Has plans (not available)</li>
+                    </ul>
+                    <strong>Michelle's Aunts:</strong>
+                    <ul>
+                        <li><strong>Aunt Megan</strong> - Garden City (15-20 min drive, easy visit)</li>
+                        <li><strong>Aunt Nancy</strong> - Southampton (1.5-2 hr drive, full day trip)</li>
+                    </ul>
+                    <strong>Transportation:</strong> May have access to car during trip
+                </div>
+
+                <h3>Friends to See</h3>
+                <div class="card">
+                    <strong>NYC Friends:</strong>
+                    <ul>
+                        <li><strong>Carmella</strong> - Upper West Side (near The Dakota)</li>
+                        <li><strong>Jeremy</strong> - Union Square area</li>
+                    </ul>
+                    <strong>Long Island Friends:</strong>
+                    <ul>
+                        <li>✅ <strong>Erica Meaney</strong> - July 1 confirmed (Long Beach - short visit)</li>
+                        <li><strong>Jamie</strong> - Has 9-5 job (evenings or weekends best)</li>
+                        <li><strong>Christin</strong> - Flexible</li>
+                        <li><strong>Jenna</strong> - If time allows</li>
+                    </ul>
+                </div>
+
+                <h3>Key Flexibility Points</h3>
+                <div class="card card-warning">
+                    <strong>Remember:</strong>
+                    <ul>
+                        <li>✅ Nothing is locked in - adjust daily</li>
+                        <li>✅ Weather dictates beach days</li>
+                        <li>✅ Kids' moods determine pace</li>
+                        <li>✅ Coordinate NYC with friends' schedules</li>
+                        <li>✅ Pool is always the backup plan</li>
+                        <li>✅ Rest days are important - don't feel guilty!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CALENDAR SECTION -->
+            <div class="section" id="calendar">
+                <h2>📅 Day-by-Day Calendar</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">June 28 - July 11, 2026</p>
+
+                <!-- Week 1 -->
+                <div class="card">
+                    <h3 style="background: #0ea5e9; color: white; padding: 12px 16px; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0; font-weight: 600;">Week 1: Arrival & Friends</h3>
+
+                    <div style="border-left: 4px solid #e2e8f0; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px;">
+                        <strong>Sun, June 28</strong> - Day 1<br>
+                        <span style="color: #64748b;">✈️ Arrival from SFO</span><br>
+                        <small>Settle in, unpack, pool if kids have energy</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #e2e8f0; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px;">
+                        <strong>Mon, June 29</strong> - Day 2<br>
+                        <span style="color: #64748b;">😴 Recovery Day</span><br>
+                        <small>Sleep in, pickleball #1, pool, adjust to time zone</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
+                        <strong>Tue, June 30</strong> - Day 3<br>
+                        <span style="color: #0ea5e9;">🗽 <strong>NYC TRIP #1 - CONFIRMED</strong></span><br>
+                        <small>Train 8:30am → See Carmella or Jeremy → Home 4pm</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
+                        <strong>Wed, July 1</strong> - Day 4<br>
+                        <span style="color: #0ea5e9;">👥 <strong>ERICA VISIT - CONFIRMED</strong></span><br>
+                        <small>Short visit in Long Beach (morning or afternoon), pool otherwise</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
+                        <strong>Thu, July 2</strong> - Day 5<br>
+                        <span style="color: #0ea5e9;">🗽 <strong>NYC TRIP #2 + EDA ARRIVES!</strong></span><br>
+                        <small>Train to NYC (see Carmella or Jeremy) → Home 4pm → 5:40pm: Eda arrives!</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0fdf4;">
+                        <strong>Fri, July 3</strong> - Day 6<br>
+                        <span style="color: #10b981;">👨‍👩‍👧 <strong>FIRST FULL DAY WITH EDA</strong></span><br>
+                        <small>Full day with Michelle's mom & Bill - pool, relaxing, catching up</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0fdf4;">
+                        <strong>Sat, July 4</strong> - Day 7<br>
+                        <span style="color: #10b981;">🎆 <strong>INDEPENDENCE DAY - LOCKED</strong></span><br>
+                        <small>Split: Michelle's dad (morning) + Eda (afternoon) → BBQ, fireworks</small>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="card">
+                    <h3 style="background: #10b981; color: white; padding: 12px 16px; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0; font-weight: 600;">Week 2: Family Time & Wrap Up</h3>
+
+                    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0fdf4;">
+                        <strong>Sun, July 5</strong> - Day 8<br>
+                        <span style="color: #10b981;">👨‍👩‍👧 <strong>FAMILY DAY</strong></span><br>
+                        <small>Michelle's dad has plans → Full day with Eda & Bill, pool, relaxing</small><br>
+                        <small style="color: #0ea5e9;">💡 Could be adults dinner night!</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #ef4444; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #fef2f2;">
+                        <strong>Mon, July 6</strong> - Day 9<br>
+                        <span style="color: #ef4444;">🏖️ <strong>JONES BEACH + AIR SHOW - LOCKED</strong></span><br>
+                        <small>FIXED - don't schedule anything else. Jones Beach air show, full family day with Eda & Bill</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0fdf4;">
+                        <strong>Tue, July 7</strong> - Day 10<br>
+                        <span style="color: #10b981;">💛 <strong>EDA'S LAST FULL DAY</strong></span><br>
+                        <small>Quality time with Michelle's mom</small><br>
+                        <small style="color: #0ea5e9;">💡 Option: Visit Aunt Nancy in Southampton (1.5hr drive) with Eda?</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #e2e8f0; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px;">
+                        <strong>Wed, July 8</strong> - Day 11<br>
+                        <span style="color: #64748b;">👋 Goodbye Morning</span><br>
+                        <small>AM: Say goodbye to Eda → PM: Recovery/rest day</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #e2e8f0; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px;">
+                        <strong>Thu, July 9</strong> - Day 12<br>
+                        <span style="color: #64748b;">🤔 Flexible Day</span><br>
+                        <small>Options: Beach day, see Jamie evening, visit Aunt Megan, or rest</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
+                        <strong>Fri, July 10</strong> - Day 13<br>
+                        <span style="color: #0ea5e9;">🏖️ <strong>LONG BEACH - SISTERS TRIP</strong></span><br>
+                        <small>9am-2pm: Michelle & Justine only → You stay home with kids</small>
+                    </div>
+
+                    <div style="border-left: 4px solid #e2e8f0; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px;">
+                        <strong>Sat, July 11</strong> - Day 14<br>
+                        <span style="color: #64748b;">✈️ Departure</span><br>
+                        <small>Pack, fly back to SFO</small>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <strong>🎯 Still Need to Schedule:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li>🏓 Pickleball (min 2x - which days?)</li>
+                        <li>🏖️ Jones Beach (2-3 days - weather dependent)</li>
+                        <li>👨‍👩‍👧 Justine family pool days (2-3 times)</li>
+                        <li>🍽️ Adults dinner out (one evening July 3-7)</li>
+                        <li>👵 Aunt Megan visit (Garden City - easy 15min)</li>
+                        <li>👵 Aunt Nancy visit (Southampton - 1.5hr, optional)</li>
+                        <li>👥 Jamie, Christin, Jenna (fit in where possible)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DECISION HELPER SECTION -->
+            <div class="section" id="decide">
+                <h2>What Should We Do Today?</h2>
+
+                <div class="decision-helper">
+                    <h3>Quick Daily Decision Helper</h3>
+
+                    <div class="question">
+                        <label>1. What's the weather?</label>
+                        <div class="options">
+                            <div class="option" data-answer="weather-sunny">☀️ Sunny</div>
+                            <div class="option" data-answer="weather-cloudy">⛅ Cloudy</div>
+                            <div class="option" data-answer="weather-rainy">🌧️ Rainy</div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>2. How are the kids today?</label>
+                        <div class="options">
+                            <div class="option" data-answer="kids-great">😊 Great</div>
+                            <div class="option" data-answer="kids-ok">😐 Okay</div>
+                            <div class="option" data-answer="kids-tired">😴 Tired</div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>3. Any plans with friends/family?</label>
+                        <div class="options">
+                            <div class="option" data-answer="plans-yes">Yes</div>
+                            <div class="option" data-answer="plans-no">No</div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <label>4. Parents' energy level?</label>
+                        <div class="options">
+                            <div class="option" data-answer="energy-high">🔥 High</div>
+                            <div class="option" data-answer="energy-medium">👍 Medium</div>
+                            <div class="option" data-answer="energy-low">😌 Low</div>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="getSuggestion()">Get Suggestion!</button>
+
+                    <div class="result" id="suggestion">
+                        <h3>Today's Suggestion:</h3>
+                        <div id="suggestionText"></div>
+                    </div>
+                </div>
+
+                <h3>Quick Reference Decision Tree</h3>
+                <div class="card">
+                    <strong>IF sunny + kids energetic:</strong> Beach or NYC (if friends available)<br><br>
+                    <strong>IF sunny + kids okay:</strong> Beach (shorter visit) or pool all day<br><br>
+                    <strong>IF rainy + kids energetic:</strong> NYC museum or family visit indoors<br><br>
+                    <strong>IF rainy + kids tired:</strong> Home/pool day (if covered) or visit family<br><br>
+                    <strong>IF anyone tired/cranky:</strong> REST DAY - pool, backyard, chill<br><br>
+                    <strong>IF friends/family scheduled:</strong> Coordinate around that
+                </div>
+            </div>
+
+            <!-- OPTIONS MENU SECTION -->
+            <div class="section" id="options">
+                <h2>📋 Quick Options Menu</h2>
+                <p style="margin-bottom: 20px; color: #666;">No hard plans today? Browse these options and pick what sounds good!</p>
+
+                <h3>🏖️ Beach Options</h3>
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;" onclick="alert('Swipe to BEACH tab for full details!')">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Jones Beach Morning</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Leave 9am, beach 9:15am-11:45am, home by noon for nap. Then pool in afternoon!</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">☀️ Sunny days only</span>
+                            <span class="tag">15 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🏖️</div>
+                    </div>
+                </div>
+
+                <h3>🗽 NYC Options (Need to Coordinate)</h3>
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;" onclick="alert('Swipe to NYC DAY 1 tab for full details!')">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Central Park + Carmella</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Ancient Playground water play, meet Carmella for coffee. Leave 8:30am, home 4:30pm.</p>
+                            <span class="tag">~7 hours</span>
+                            <span class="tag">⚠️ Skip nap</span>
+                            <span class="tag">Check with Carmella first</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🌳</div>
+                    </div>
+                </div>
+
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;" onclick="alert('Swipe to NYC DAY 2 tab for full details!')">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Brooklyn + Jeremy</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">DUMBO playgrounds, Jane's Carousel, meet Jeremy at Madison Sq Park. Leave 8:30am, home 4:30pm.</p>
+                            <span class="tag">~7 hours</span>
+                            <span class="tag">⚠️ Skip nap</span>
+                            <span class="tag">Check with Jeremy first</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🌉</div>
+                    </div>
+                </div>
+
+                <h3>👨‍👩‍👧‍👦 Family Options</h3>
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;" onclick="alert('Swipe to FAMILY tab for full details!')">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Pool Day with Justine's Family</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Host at your house. Kids play in pool, adults relax. Can coordinate around nap time. Easiest option!</p>
+                            <span class="tag">Flexible timing</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">At home</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🏊</div>
+                    </div>
+                </div>
+
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Visit Justine's House</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Morning visit, kids play together, maybe lunch. Home for nap or coordinate nap there.</p>
+                            <span class="tag">3-5 hours</span>
+                            <span class="tag">Morning best</span>
+                            <span class="tag">Coordinate first</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🏡</div>
+                    </div>
+                </div>
+
+                <div class="card" style="cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Beach Day Together</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Meet Justine's family at Jones Beach. Kids play together, cousins bond. Morning session.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">☀️ Sunny days</span>
+                            <span class="tag">Coordinate timing</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">👨‍👩‍👧‍👦</div>
+                    </div>
+                </div>
+
+                <h3>🎢 Long Island Attractions (Optional)</h3>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Long Island Aquarium</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Riverhead (~45 min drive). Perfect for both kids. Indoor, good for hot/rainy days. Morning visit best.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">45 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🐠</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Adventureland</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Farmingdale (20 min). Small amusement park, rides for young kids. Morning or late afternoon (avoid midday heat).</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">20 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🎢</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Eisenhower Park Splash Pad</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">East Meadow (15 min). FREE! Playground + splash pad. Perfect easy morning. Home by noon.</p>
+                            <span class="tag">1.5-2 hours</span>
+                            <span class="tag">Keep nap</span>
+                            <span class="tag">FREE</span>
+                            <span class="tag">15 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">💦</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Coney Island</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Brooklyn (~50 min drive or LIRR). Beach + boardwalk + Luna Park rides. Classic NYC experience. Full day trip or half day morning.</p>
+                            <span class="tag">4-6 hours</span>
+                            <span class="tag">Skip nap</span>
+                            <span class="tag">50 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🎡</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Long Island Children's Museum</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Garden City (15 min). Indoor hands-on exhibits perfect for both kids' ages. Great for hot/rainy days. Morning visit best.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">15 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🏛️</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Cradle of Aviation Museum</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Garden City (15 min). Planes, helicopters, rockets. Great for curious 5yo. Indoor with planetarium shows. Morning visit best.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">15 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🚀</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">White Post Farms</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Melville (25 min). Petting zoo, pony rides, tractor rides. Perfect for toddlers. Morning visit to avoid heat.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">25 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🐴</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Caumsett State Park</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Lloyd Neck (40 min). Easy trails, beach, open fields to run. Bring bikes/scooters. Perfect nature morning. Home by lunch.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Keep nap</span>
+                            <span class="tag">40 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🌳</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Bayville Adventure Park</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Bayville (25 min). Mini golf, arcade, go-karts (older kids only). 5yo will love mini golf. Morning or late afternoon.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Can keep nap</span>
+                            <span class="tag">25 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">⛳</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #0ea5e9; font-size: 16px;">Connetquot River State Park</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Oakdale (30 min). Easy nature trails, river views, lots of space to explore. Stroller-friendly paths. Morning visit best.</p>
+                            <span class="tag">2-3 hours</span>
+                            <span class="tag">Keep nap</span>
+                            <span class="tag">FREE</span>
+                            <span class="tag">30 min drive</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🦌</div>
+                    </div>
+                </div>
+
+                <h3>🏠 Easy/Rest Day Options</h3>
+                <div class="card card-success">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #4caf50; font-size: 16px;">Just Pool Day</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Stay home! Pool in morning, nap, pool in afternoon. Watch movies, play in yard. Everyone needs rest days.</p>
+                            <span class="tag">All day</span>
+                            <span class="tag">Keep nap</span>
+                            <span class="tag">Zero stress</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">😌</div>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #4caf50; font-size: 16px;">Local Playground + Pool</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Quick morning at nearby park/playground. Home by 11am. Nap. Pool all afternoon. Super easy.</p>
+                            <span class="tag">1 hour outing</span>
+                            <span class="tag">Keep nap</span>
+                            <span class="tag">Low effort</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🛝</div>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong style="color: #4caf50; font-size: 16px;">Ice Cream Outing</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">After nap (3-4pm), quick drive to local ice cream shop. Simple, fun, kids love it. Back home for dinner.</p>
+                            <span class="tag">30-45 min</span>
+                            <span class="tag">After nap</span>
+                            <span class="tag">Easy win</span>
+                        </div>
+                        <div style="font-size: 40px; margin-left: 10px;">🍦</div>
+                    </div>
+                </div>
+
+                <h3>🌧️ Rainy Day Backups</h3>
+                <div class="card card-warning">
+                    <strong>If weather is bad:</strong>
+                    <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li><strong>Long Island Aquarium</strong> - Indoor, perfect for rain</li>
+                        <li><strong>NYC Museum</strong> - Natural History or MoMA</li>
+                        <li><strong>Visit Justine indoors</strong> - Kids play at her house</li>
+                        <li><strong>Home day</strong> - Movies, arts & crafts, indoor play</li>
+                        <li><strong>Local indoor play space</strong> - Research nearby options</li>
+                    </ul>
+                </div>
+
+                <h3>💡 How to Use This Menu</h3>
+                <div class="card card-highlight">
+                    <strong>Morning Decision Process:</strong>
+                    <ol style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li>Check weather forecast</li>
+                        <li>Ask: How are kids feeling?</li>
+                        <li>Ask: How are we feeling?</li>
+                        <li>Any hard plans today? (friends/family scheduled)</li>
+                        <li>If no: Browse this menu!</li>
+                        <li>Pick what sounds good</li>
+                        <li>Go to that tab for detailed plan</li>
+                    </ol>
+                </div>
+
+                <div class="card">
+                    <strong>⭐ Pro Tips:</strong>
+                    <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li>NYC days need 1-2 days advance coordination with friends</li>
+                        <li>Beach/pool can be decided same morning (weather dependent)</li>
+                        <li>Family days best coordinated day before ("Tomorrow work?")</li>
+                        <li>When in doubt → Pool day (can't go wrong!)</li>
+                        <li>Don't feel pressure to "do something" every day</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NYC DAY 1 SECTION -->
+            <div class="section" id="nyc1">
+                <h2>NYC Day Trip 1: Central Park</h2>
+
+                <div class="card card-highlight">
+                    <strong>Focus:</strong> Central Park water play + meet Carmella<br>
+                    <strong>Duration:</strong> ~7 hours (home by 4:30pm)<br>
+                    <strong>Skip nap:</strong> Yes - early bedtime tonight<br>
+                    <strong>Best day:</strong> Weekday (less crowded)
+                </div>
+
+                <h3>Schedule</h3>
+                <div class="card">
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">8:30am</span>
+                            <div class="activity">
+                                <strong>LIRR from Merrick</strong>
+                                <small>Babylon Branch train to Penn Station (~45 min)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:20am</span>
+                            <div class="activity">
+                                <strong>Arrive Penn Station</strong>
+                                <small>Take subway or taxi to Upper West Side</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:00am</span>
+                            <div class="activity">
+                                <strong>Meet Carmella (optional)</strong>
+                                <small>Coffee/brunch near The Dakota (72nd & Central Park West)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00am</span>
+                            <div class="activity">
+                                <strong>Enter Central Park</strong>
+                                <small>Walk through park toward Ancient Playground (East 85th St)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:30am</span>
+                            <div class="activity">
+                                <strong>Ancient Playground - WATER PLAY!</strong>
+                                <small>Egyptian-themed playground with spray features. Let kids play as long as they want!</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">1:00pm</span>
+                            <div class="activity">
+                                <strong>Lunch in park</strong>
+                                <small>Picnic or nearby café. Change kids into dry clothes.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">2:00pm</span>
+                            <div class="activity">
+                                <strong>More park exploring</strong>
+                                <small>Bethesda Terrace, Bow Bridge, or just relax. 2.5yo might nap in stroller.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">2:45pm</span>
+                            <div class="activity">
+                                <strong>Head to Penn Station</strong>
+                                <small>Subway or taxi back</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">3:30pm</span>
+                            <div class="activity">
+                                <strong>LIRR back to Merrick</strong>
+                                <small>Kids might nap on train</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">4:20pm</span>
+                            <div class="activity">
+                                <strong>Home!</strong>
+                                <small>Quick pool dip or rest, early dinner, early bedtime</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>What to Pack</h3>
+                <div class="card">
+                    <ul class="checklist">
+                        <li>Swimsuits for both girls (wear under clothes)</li>
+                        <li>2-3 towels</li>
+                        <li>Complete change of clothes (both kids)</li>
+                        <li>Extra diapers/pull-ups for 2.5yo</li>
+                        <li>Sunscreen (SPF 50+) - reapply every 2 hours!</li>
+                        <li>Hats for both kids</li>
+                        <li>Snacks & water bottles (lots!)</li>
+                        <li>Stroller with sunshade</li>
+                        <li>Portable charger</li>
+                        <li>Small first aid kit</li>
+                        <li>Hand wipes/sanitizer</li>
+                        <li>Plastic bag for wet clothes</li>
+                        <li>Comfort item for 2.5yo</li>
+                    </ul>
+                </div>
+
+                <h3>Important Notes</h3>
+                <div class="card card-warning">
+                    <ul>
+                        <li>⚠️ <strong>Carmella coordination:</strong> Confirm time/location 1-2 days before</li>
+                        <li>🌡️ Check weather - have backup plan if rain</li>
+                        <li>🚆 LIRR can be checked at: mta.info (check for any service changes)</li>
+                        <li>💳 Bring cash for any food carts in park</li>
+                        <li>🚻 Bathrooms: Available in park, but plan ahead</li>
+                        <li>🎒 Keep backpack light - you'll be carrying it all day</li>
+                        <li>📱 Screenshot this schedule offline just in case!</li>
+                    </ul>
+                </div>
+
+                <h3>Backup Plans</h3>
+                <div class="card">
+                    <strong>If rain:</strong> Could do Natural History Museum instead (right near Ancient Playground)<br><br>
+                    <strong>If Carmella unavailable:</strong> Go straight to park, more time there<br><br>
+                    <strong>If kids meltdown:</strong> Leave early, catch earlier train home<br><br>
+                    <strong>If too crowded:</strong> Find quieter part of Central Park, still fun
+                </div>
+            </div>
+
+            <!-- NYC DAY 2 SECTION -->
+            <div class="section" id="nyc2">
+                <h2>NYC Day Trip 2: Brooklyn</h2>
+
+                <div class="card card-highlight">
+                    <strong>Focus:</strong> DUMBO + Brooklyn Heights + meet Jeremy<br>
+                    <strong>Duration:</strong> ~7 hours (home by 4:30pm)<br>
+                    <strong>Skip nap:</strong> Yes - early bedtime tonight<br>
+                    <strong>Best day:</strong> Weekday (less crowded)
+                </div>
+
+                <h3>Schedule</h3>
+                <div class="card">
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">8:30am</span>
+                            <div class="activity">
+                                <strong>LIRR from Merrick</strong>
+                                <small>To Penn Station (~45 min)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30am</span>
+                            <div class="activity">
+                                <strong>Arrive Penn Station</strong>
+                                <small>Subway to Madison Square Park area</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:00am</span>
+                            <div class="activity">
+                                <strong>Meet Jeremy - Madison Square Park (Union Sq area)</strong>
+                                <small>Coffee, catch up. Kids play at playground. ~1 hour.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00am</span>
+                            <div class="activity">
+                                <strong>Subway to Brooklyn</strong>
+                                <small>High St or York St stop (~20 min)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:30am</span>
+                            <div class="activity">
+                                <strong>DUMBO - Brooklyn Bridge Park</strong>
+                                <small>Playgrounds, waterfront, Jane's Carousel ($2/ride). Let kids play!</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">1:00pm</span>
+                            <div class="activity">
+                                <strong>Lunch - Time Out Market or waterfront</strong>
+                                <small>Food hall with many options, kid-friendly</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">2:00pm</span>
+                            <div class="activity">
+                                <strong>Brooklyn Heights Promenade</strong>
+                                <small>Walk up from DUMBO (10 min). Beautiful views, wide walkway, photo op!</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">2:45pm</span>
+                            <div class="activity">
+                                <strong>Head back to Penn Station</strong>
+                                <small>Subway from Brooklyn</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">3:30pm</span>
+                            <div class="activity">
+                                <strong>LIRR to Merrick</strong>
+                                <small>Kids might nap on train</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">4:20pm</span>
+                            <div class="activity">
+                                <strong>Home!</strong>
+                                <small>Rest/pool, early dinner, early bedtime</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>What to Pack</h3>
+                <div class="card">
+                    <ul class="checklist">
+                        <li>Comfortable walking shoes (lots of walking!)</li>
+                        <li>Stroller (helpful for 2.5yo when tired)</li>
+                        <li>Sunscreen & hats</li>
+                        <li>Snacks & water bottles</li>
+                        <li>Diapers/wipes for 2.5yo</li>
+                        <li>Light jackets (can be windy by water)</li>
+                        <li>Change of clothes for 2.5yo (accidents)</li>
+                        <li>Small toys/books for train</li>
+                        <li>Portable charger</li>
+                        <li>Cash for Jane's Carousel ($2/ride)</li>
+                        <li>Camera/phone for photos (great views!)</li>
+                    </ul>
+                </div>
+
+                <h3>Why DUMBO/Brooklyn Heights Works</h3>
+                <div class="card card-success">
+                    <ul>
+                        <li>✅ Multiple playgrounds (kids can run, play, burn energy)</li>
+                        <li>✅ Waterfront = open space, can't get lost</li>
+                        <li>✅ Beautiful views (you'll enjoy it too!)</li>
+                        <li>✅ Not as overwhelming as Midtown Manhattan</li>
+                        <li>✅ Food options at Time Out Market (something for everyone)</li>
+                        <li>✅ Jane's Carousel is magical (kids love it)</li>
+                        <li>✅ Brooklyn Heights Promenade = iconic NYC view</li>
+                        <li>✅ Stroller-friendly throughout</li>
+                    </ul>
+                </div>
+
+                <h3>Important Notes</h3>
+                <div class="card card-warning">
+                    <ul>
+                        <li>⚠️ <strong>Jeremy coordination:</strong> Confirm 1-2 days before. Madison Sq Park has playground - perfect for kids!</li>
+                        <li>🌡️ Check weather - waterfront can be windy</li>
+                        <li>🎠 Jane's Carousel hours: Usually 11am-7pm, check if going on Monday</li>
+                        <li>🚻 Bathrooms: Time Out Market, park facilities</li>
+                        <li>💳 Mostly card accepted, but have some cash</li>
+                        <li>📸 Great photo spots: DUMBO with Manhattan Bridge, Brooklyn Heights Promenade</li>
+                    </ul>
+                </div>
+
+                <h3>Backup Plans</h3>
+                <div class="card">
+                    <strong>If Jeremy unavailable:</strong> Skip Madison Sq Park, go straight to Brooklyn (more time there)<br><br>
+                    <strong>If rain:</strong> Could do Brooklyn Children's Museum or switch to Manhattan museum<br><br>
+                    <strong>If kids tired early:</strong> Skip Brooklyn Heights, head home earlier<br><br>
+                    <strong>If too cold/windy:</strong> More time at Time Out Market, less waterfront
+                </div>
+            </div>
+
+            <!-- BEACH SECTION -->
+            <div class="section" id="beach">
+                <h2>Jones Beach Day</h2>
+
+                <div class="card card-highlight">
+                    <strong>Distance:</strong> 15 minutes from Merrick<br>
+                    <strong>Best area:</strong> West End 2 (Field 2) - calmer waters, lifeguards<br>
+                    <strong>Duration:</strong> Morning session (9am-12pm)<br>
+                    <strong>Nap:</strong> Yes - home by noon for lunch & nap
+                </div>
+
+                <h3>Beach Day Schedule</h3>
+                <div class="card">
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">8:30am</span>
+                            <div class="activity">
+                                <strong>Prep & Pack</strong>
+                                <small>Breakfast, apply first coat of sunscreen, pack car</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:00am</span>
+                            <div class="activity">
+                                <strong>Arrive Jones Beach</strong>
+                                <small>15 min drive. Park at West End 2 (Field 2).</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:15am</span>
+                            <div class="activity">
+                                <strong>Set Up</strong>
+                                <small>Umbrella/tent, towels, toys. Set up near lifeguard.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30-11:45am</span>
+                            <div class="activity">
+                                <strong>BEACH TIME!</strong>
+                                <small>Play in sand, wade in water, build castles, snacks, relax. Reapply sunscreen at 11am!</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:45am</span>
+                            <div class="activity">
+                                <strong>Pack Up</strong>
+                                <small>Rinse kids at outdoor showers, change clothes, load car</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00pm</span>
+                            <div class="activity">
+                                <strong>Drive Home</strong>
+                                <small>15 min home</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30pm</span>
+                            <div class="activity">
+                                <strong>Lunch & Nap</strong>
+                                <small>Quick lunch, 2.5yo nap time</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">3:00pm</span>
+                            <div class="activity">
+                                <strong>Pool Time!</strong>
+                                <small>After nap, pool at house. Double water day!</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>What to Pack</h3>
+                <div class="card">
+                    <strong>🏖️ Beach Essentials:</strong>
+                    <ul class="checklist">
+                        <li>Beach tent or umbrella (shade for 2.5yo!)</li>
+                        <li>Large beach blanket or mat</li>
+                        <li>Beach toys (buckets, shovels, molds)</li>
+                        <li>Cooler with snacks & drinks</li>
+                        <li>LOTS of sunscreen (SPF 50+, water-resistant)</li>
+                        <li>Hats & sunglasses for everyone</li>
+                        <li>Beach towels (one per person + extras)</li>
+                        <li>Swim diapers for 2.5yo</li>
+                        <li>Life jackets if needed</li>
+                        <li>Water shoes (optional, sand can get hot)</li>
+                        <li>Baby powder (helps remove sand from skin)</li>
+                        <li>Plastic bags for wet items</li>
+                    </ul>
+
+                    <strong>👕 Clothes:</strong>
+                    <ul class="checklist">
+                        <li>Swimsuits (wear under clothes)</li>
+                        <li>Rash guards for kids (sun protection)</li>
+                        <li>Complete change of clothes for car ride home</li>
+                        <li>Extra outfit for 2.5yo (accidents)</li>
+                    </ul>
+
+                    <strong>🍎 Food & Drinks:</strong>
+                    <ul class="checklist">
+                        <li>Water bottles (keep hydrated!)</li>
+                        <li>Juice boxes</li>
+                        <li>Easy snacks (goldfish, pretzels, fruit, sandwiches)</li>
+                        <li>Ice packs for cooler</li>
+                    </ul>
+
+                    <strong>🩹 Other:</strong>
+                    <ul class="checklist">
+                        <li>First aid kit (band-aids, aloe)</li>
+                        <li>Diapers & wipes</li>
+                        <li>Hand sanitizer</li>
+                        <li>Tissues</li>
+                        <li>Portable phone charger</li>
+                        <li>Cash for parking/concessions</li>
+                    </ul>
+                </div>
+
+                <h3>Important Beach Safety</h3>
+                <div class="card card-warning">
+                    <ul>
+                        <li>🏊 Always stay near lifeguard stations</li>
+                        <li>☀️ Apply sunscreen 30 min before sun exposure, reapply every 2 hours</li>
+                        <li>👀 NEVER take eyes off kids near water - not even for a second</li>
+                        <li>🌊 Check flag conditions (green=calm, yellow=moderate, red=dangerous)</li>
+                        <li>💧 Keep kids hydrated - offer water every 30 min</li>
+                        <li>🏖️ Set up umbrella/tent before kids in sun</li>
+                        <li>⏰ Leave BEFORE anyone gets overtired or sunburned</li>
+                        <li>🚿 Use outdoor showers to rinse sand before car</li>
+                    </ul>
+                </div>
+
+                <h3>Why Morning Beach Sessions Work Best</h3>
+                <div class="card card-success">
+                    <ul>
+                        <li>✅ Cooler temperatures (not blazing hot yet)</li>
+                        <li>✅ Less crowded (easier parking, more space)</li>
+                        <li>✅ Protects nap schedule (home by noon)</li>
+                        <li>✅ Kids have morning energy</li>
+                        <li>✅ Still have afternoon pool time at home!</li>
+                        <li>✅ Less sun exposure overall (safer)</li>
+                        <li>✅ Can do 2-3 beach days without exhaustion</li>
+                    </ul>
+                </div>
+
+                <h3>Weather Considerations</h3>
+                <div class="card">
+                    <strong>Perfect beach day:</strong> Sunny, 75-85°F, light breeze<br><br>
+                    <strong>Skip beach if:</strong>
+                    <ul>
+                        <li>Rain or thunderstorms</li>
+                        <li>High wind (sand blowing, rough waves)</li>
+                        <li>Extreme heat (95°F+)</li>
+                        <li>Red flag conditions</li>
+                    </ul>
+                    <strong>Backup:</strong> Pool day at home instead!
+                </div>
+
+                <h3>Frequency Guide</h3>
+                <div class="card card-highlight">
+                    <strong>Recommended:</strong> 2-3 beach visits over 2 weeks<br><br>
+                    <strong>Why not more?</strong>
+                    <ul>
+                        <li>Beach days are exhausting (sun, heat, logistics)</li>
+                        <li>You have pool at home (easier water fun)</li>
+                        <li>2-3 times is special, 5+ times gets routine</li>
+                        <li>Leaves energy for NYC trips & family time</li>
+                    </ul>
+                    <strong>When to go:</strong>
+                    <ul>
+                        <li>Week 1: Once or twice (early in trip)</li>
+                        <li>Week 2: Once (later in trip)</li>
+                        <li>Check weather forecast 2-3 days ahead</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAMILY SECTION -->
+            <div class="section" id="family">
+                <h2>Family Time Options</h2>
+
+                <div class="card card-highlight">
+                    <strong>Justine's Family:</strong> Sister with Alanna (8.5yo) & Jonathan (2yo)<br>
+                    <strong>Michelle's Mom:</strong> Visiting from Florida<br>
+                    <strong>Frequency:</strong> 4-6 visits over 2 weeks<br>
+                    <strong>Goal:</strong> Quality time, let kids play together, adults relax
+                </div>
+
+                <h3>Option A: Pool Day at Your House ⭐</h3>
+                <div class="card card-success">
+                    <strong>Best option! Why:</strong>
+                    <ul>
+                        <li>✅ Kids play in pool together (supervised fun)</li>
+                        <li>✅ You're at home (easy, comfortable)</li>
+                        <li>✅ Can coordinate around 2.5yo's nap</li>
+                        <li>✅ Adults can relax, chat, supervise</li>
+                        <li>✅ No travel/packing needed</li>
+                        <li>✅ Flexible timing</li>
+                    </ul>
+
+                    <strong>Typical schedule:</strong>
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">10:00am</span>
+                            <div class="activity">
+                                <strong>Justine's family arrives</strong>
+                                <small>Kids start playing</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30am-12pm</span>
+                            <div class="activity">
+                                <strong>Pool time / backyard play</strong>
+                                <small>All 4 kids play together, adults supervise & chat</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00pm</span>
+                            <div class="activity">
+                                <strong>Lunch together</strong>
+                                <small>BBQ, sandwiches, casual meal</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30pm</span>
+                            <div class="activity">
+                                <strong>Nap time decision</strong>
+                                <small>Your 2.5yo naps. Jonathan might nap. Older girls keep playing (quieter).</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">3:00pm</span>
+                            <div class="activity">
+                                <strong>More pool time</strong>
+                                <small>Kids wake up, back to pool</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">5:00pm</span>
+                            <div class="activity">
+                                <strong>Justine's family heads home</strong>
+                                <small>Or stay for dinner if everyone's having fun!</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <strong>Frequency:</strong> Could do this 2-3 times easily!
+                </div>
+
+                <h3>Option B: Visit Justine's House</h3>
+                <div class="card">
+                    <strong>When:</strong> When she invites you over, or coordinate ahead<br>
+                    <strong>Duration:</strong> 3-5 hours<br>
+                    <strong>Nap:</strong> Can ask if 2.5yo can nap there, or plan shorter visit
+
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="time">10:00am</span>
+                            <div class="activity">
+                                <strong>Arrive at Justine's</strong>
+                                <small>Drive time TBD</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30am-12:30pm</span>
+                            <div class="activity">
+                                <strong>Kids play, adults chat</strong>
+                                <small>Let kids entertain each other</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30pm</span>
+                            <div class="activity">
+                                <strong>Lunch or head home</strong>
+                                <small>Depends on nap schedule</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <strong>What to bring:</strong> Snacks for your kids, diapers/wipes, maybe a toy to share
+                </div>
+
+                <h3>Option C: Joint Outing</h3>
+                <div class="card">
+                    <strong>Ideas for group activities:</strong>
+                    <ul>
+                        <li><strong>Jones Beach together:</strong> Morning beach session, kids play together</li>
+                        <li><strong>Local playground:</strong> Meet at park, easy & free</li>
+                        <li><strong>Adventureland:</strong> Amusement park, good for all ages (8yo & 5.5yo would love it)</li>
+                        <li><strong>Lunch/ice cream outing:</strong> Low-key, just getting together</li>
+                    </ul>
+
+                    <strong>Pros:</strong> Fun shared experience, kids play together<br>
+                    <strong>Cons:</strong> Logistics with 2 families, harder to coordinate naps
+                </div>
+
+                <h3>Option D: Grandma Days</h3>
+                <div class="card">
+                    <strong>Michelle's Mom visits at your house:</strong>
+                    <ul>
+                        <li>Grandma time with grandkids</li>
+                        <li>Pool, playing, showing her what kids are learning</li>
+                        <li>Could be morning or afternoon</li>
+                        <li>Keep it relaxed - she's on vacation too!</li>
+                    </ul>
+
+                    <strong>Could combine:</strong> Michelle's mom + Justine's family all at your house (big family pool day!)
+                </div>
+
+                <h3>Suggested Family Visit Frequency</h3>
+                <div class="card card-warning">
+                    <strong>Week 1:</strong>
+                    <ul>
+                        <li>2-3 family days (settling in, initial visits)</li>
+                        <li>Maybe July 4th big family gathering?</li>
+                    </ul>
+
+                    <strong>Week 2:</strong>
+                    <ul>
+                        <li>2-3 family days (continued connection)</li>
+                        <li>Can be more or less based on how it feels</li>
+                    </ul>
+
+                    <strong>Don't overdo it:</strong> You also need rest days, NYC days, and pool-only days. Family will understand!
+                </div>
+
+                <h3>July 4th Ideas</h3>
+                <div class="card card-success">
+                    <strong>🎆 Independence Day - Big Family Day!</strong>
+                    <ul>
+                        <li><strong>Host at your house:</strong> BBQ, pool day, everyone together</li>
+                        <li><strong>Or at Justine's:</strong> Depends who wants to host</li>
+                        <li><strong>Evening:</strong> Local fireworks (Merrick or nearby town)</li>
+                        <li><strong>Keep it casual:</strong> Potluck style, easy for everyone</li>
+                    </ul>
+
+                    <strong>What kids will love:</strong> Pool all day, sparklers (older kids only, supervised!), staying up late for fireworks
+                </div>
+
+                <h3>Coordination Tips</h3>
+                <div class="card">
+                    <ul>
+                        <li>📱 Text Justine early in trip: "Want to do pool day Tuesday?"</li>
+                        <li>📅 Don't over-schedule: "Let's play it by ear" is fine</li>
+                        <li>🏊 Pool days easiest: "Come over whenever, stay as long as you want"</li>
+                        <li>🤝 Tag-team parenting: 4 kids is easier with 4 adults!</li>
+                        <li>😴 Respect nap times: Can say "come after 3pm" if needed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- REFERENCE SECTION -->
+            <div class="section" id="reference">
+                <h2>Quick Reference</h2>
+
+                <h3>🚆 LIRR Train Info</h3>
+                <div class="card">
+                    <strong>Route:</strong> Merrick Station → Penn Station (Babylon Branch)<br>
+                    <strong>Duration:</strong> ~45-50 minutes<br>
+                    <strong>Frequency:</strong> Every 30-60 minutes<br>
+                    <strong>Cost:</strong> ~$10-13 off-peak, ~$14 peak (one way per person)<br>
+                    <strong>Kids:</strong> Under 5 ride free!<br>
+                    <strong>Schedule:</strong> Check mta.info or LIRR Train Time app<br><br>
+
+                    <strong>NYC Day Trip Timing:</strong><br>
+                    - Outbound: ~8:30am from Merrick<br>
+                    - Return: ~3:30pm from Penn Station<br>
+                    - Home by 4:20-4:30pm
+                </div>
+
+                <h3>📍 Key Locations</h3>
+                <div class="card">
+                    <strong>Home Base:</strong> Merrick, Long Island<br><br>
+
+                    <strong>Jones Beach:</strong> 15 min drive, West End 2 (Field 2)<br><br>
+
+                    <strong>NYC Friends:</strong><br>
+                    - Carmella: Upper West Side (72nd & Central Park West)<br>
+                    - Jeremy: Union Square area<br><br>
+
+                    <strong>Central Park:</strong> Ancient Playground at East 85th St<br><br>
+
+                    <strong>Brooklyn:</strong> DUMBO (High St or York St subway stop)
+                </div>
+
+                <h3>☀️ Summer Packing Lists</h3>
+                <div class="card">
+                    <strong>Every Outing:</strong>
+                    <ul class="checklist">
+                        <li>Sunscreen SPF 50+ (reapply every 2 hours!)</li>
+                        <li>Hats for both kids</li>
+                        <li>Water bottles</li>
+                        <li>Snacks (always!)</li>
+                        <li>Diapers/wipes for 2.5yo</li>
+                        <li>Hand sanitizer</li>
+                        <li>Small first aid kit</li>
+                    </ul>
+
+                    <strong>NYC Days Add:</strong>
+                    <ul class="checklist">
+                        <li>Stroller</li>
+                        <li>Portable charger</li>
+                        <li>Small toys for train</li>
+                        <li>Light jacket (indoors cold)</li>
+                        <li>Cash for small purchases</li>
+                    </ul>
+
+                    <strong>Beach Days Add:</strong>
+                    <ul class="checklist">
+                        <li>Beach tent/umbrella</li>
+                        <li>Towels (lots!)</li>
+                        <li>Beach toys</li>
+                        <li>Cooler with food/drinks</li>
+                        <li>Swim diapers</li>
+                        <li>Complete change of clothes</li>
+                        <li>Plastic bags for wet items</li>
+                    </ul>
+                </div>
+
+                <h3>🏊 Pool Essentials (At House)</h3>
+                <div class="card">
+                    <ul class="checklist">
+                        <li>Swim diapers for 2.5yo (buy in bulk!)</li>
+                        <li>Life jacket or floaties for 2.5yo</li>
+                        <li>Pool toys (probably already there)</li>
+                        <li>Towels (keep extras handy)</li>
+                        <li>Sunscreen (even at home pool!)</li>
+                        <li>Shade option (umbrella or covered area)</li>
+                        <li>Water bottles poolside</li>
+                        <li>Snacks nearby (kids get hungry after swimming)</li>
+                    </ul>
+
+                    <strong>⚠️ Pool Safety:</strong>
+                    <ul>
+                        <li>NEVER leave kids unattended - not even for 1 second</li>
+                        <li>Designated adult watching at all times</li>
+                        <li>Know where 2.5yo is constantly</li>
+                        <li>Empty kiddie pools when not in use</li>
+                        <li>Swim diapers required for 2.5yo</li>
+                    </ul>
+                </div>
+
+                <h3>🍽️ Meal Planning Tips</h3>
+                <div class="card">
+                    <strong>Breakfast:</strong> Easy at home before outings<br>
+                    <strong>Lunch:</strong>
+                    <ul>
+                        <li>Beach days: Pack picnic</li>
+                        <li>NYC days: Casual restaurants/food halls</li>
+                        <li>Home days: Easy meals</li>
+                    </ul>
+                    <strong>Dinner:</strong> With family, keep simple<br><br>
+
+                    <strong>Snack Ideas (Always Have!):</strong><br>
+                    Goldfish, pretzels, fruit pouches, cheese sticks, crackers, granola bars, fruit
+                </div>
+
+                <h3>⛈️ Weather Backups</h3>
+                <div class="card">
+                    <strong>If rain on planned beach day:</strong>
+                    <ul>
+                        <li>Switch to NYC museum day</li>
+                        <li>Visit Justine's family indoors</li>
+                        <li>Pool at home (if covered/warm enough)</li>
+                        <li>Local indoor play space</li>
+                        <li>Just a home rest day</li>
+                    </ul>
+
+                    <strong>If rain on planned NYC day:</strong>
+                    <ul>
+                        <li>Still go! Museums are indoors</li>
+                        <li>Bring umbrella/rain jackets</li>
+                        <li>Or postpone to another day</li>
+                    </ul>
+                </div>
+
+                <h3>🚨 Important Numbers</h3>
+                <div class="card card-warning">
+                    <strong>Emergency:</strong> 911<br>
+                    <strong>LIRR Info:</strong> (718) 217-LIRR<br>
+                    <strong>Poison Control:</strong> 1-800-222-1222<br><br>
+
+                    <strong>Add these:</strong>
+                    <ul>
+                        <li>Michelle's dad's cell</li>
+                        <li>Justine's cell</li>
+                        <li>Carmella's cell</li>
+                        <li>Jeremy's cell</li>
+                        <li>Local urgent care address</li>
+                    </ul>
+                </div>
+
+                <h3>💡 Pro Tips</h3>
+                <div class="card card-success">
+                    <ul>
+                        <li>✅ Screenshot key info offline (train schedules, addresses)</li>
+                        <li>✅ Pack bags night before big outings</li>
+                        <li>✅ Apply sunscreen before leaving house</li>
+                        <li>✅ Bring double the snacks you think you need</li>
+                        <li>✅ Take photos! (But don't stress about perfect shots)</li>
+                        <li>✅ Be flexible - plans can change and that's OK</li>
+                        <li>✅ Rest days are important - don't feel guilty</li>
+                        <li>✅ Pool is always the backup plan</li>
+                        <li>✅ Kids' moods dictate the day, not the schedule</li>
+                        <li>✅ Quality time > checking off attractions</li>
+                    </ul>
+                </div>
+
+                <h3>📱 Useful Apps</h3>
+                <div class="card">
+                    <strong>MTA Train Time:</strong> LIRR schedules<br>
+                    <strong>Google Maps:</strong> Directions, transit<br>
+                    <strong>Weather:</strong> Check daily!<br>
+                    <strong>Photos:</strong> Make shared album with Michelle<br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active from all
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+                // Add active to clicked
+                this.classList.add('active');
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+
+                // Scroll to top
+                document.querySelector('.content').scrollTop = 0;
+            });
+        });
+
+        // Decision Helper
+        let selections = {
+            weather: null,
+            kids: null,
+            plans: null,
+            energy: null
+        };
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const answer = this.getAttribute('data-answer');
+                const category = answer.split('-')[0];
+
+                // Remove selected from siblings
+                this.parentElement.querySelectorAll('.option').forEach(o => {
+                    o.classList.remove('selected');
+                });
+
+                // Add selected to this
+                this.classList.add('selected');
+
+                // Store selection
+                selections[category] = answer.split('-')[1];
+            });
+        });
+
+        function getSuggestion() {
+            const { weather, kids, plans, energy } = selections;
+
+            // Check if all selected
+            if (!weather || !kids || !plans || !energy) {
+                alert('Please answer all questions first!');
+                return;
+            }
+
+            let suggestion = '';
+
+            // Logic for suggestions
+            if (plans === 'yes') {
+                suggestion = '📅 <strong>Follow your scheduled plans</strong> with friends/family today!';
+            } else if (weather === 'sunny' && kids === 'great' && energy === 'high') {
+                suggestion = '🏖️ <strong>Perfect Beach Day!</strong><br>Sunny weather + energetic kids + you\'re feeling good = Jones Beach morning session! Get there by 9am, home by noon for nap, then pool in afternoon.';
+            } else if (weather === 'sunny' && kids === 'great' && plans === 'no') {
+                suggestion = '🗽 <strong>Great day for NYC!</strong><br>Check if Carmella or Jeremy are available. If not, could still do beach or fun pool day with family.';
+            } else if (weather === 'rainy' && kids === 'great') {
+                suggestion = '🏛️ <strong>Indoor Adventure Day</strong><br>Could do NYC museum (Natural History would be amazing!), or visit Justine\'s family indoors, or local indoor attraction.';
+            } else if (kids === 'tired' || energy === 'low') {
+                suggestion = '🏠 <strong>REST DAY!</strong><br>Stay home, easy morning, protect nap time, pool in afternoon. Watch movies, play quietly. Everyone needs recovery days!';
+            } else if (weather === 'sunny' && kids === 'ok') {
+                suggestion = '🏊 <strong>Easy Pool Day</strong><br>Stay home, light morning activities, definitely nap, pool all afternoon. Maybe invite Justine\'s family over for low-key pool time?';
+            } else if (weather === 'rainy') {
+                suggestion = '🏡 <strong>Cozy Home Day</strong><br>Indoor play, arts & crafts, movies, maybe visit family or host them at your place. Pool if covered. Just a chill day!';
+            } else {
+                suggestion = '🎯 <strong>Medium Energy Day</strong><br>Local playground, short outing, or pool day. Keep it simple and close to home. Save energy for bigger adventures later!';
+            }
+
+            document.getElementById('suggestionText').innerHTML = suggestion;
+            document.getElementById('suggestion').classList.add('show');
+        }
+    </script>
+</body>
+</html>
