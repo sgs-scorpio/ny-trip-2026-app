@@ -364,6 +364,134 @@
                 padding: 15px;
             }
         }
+
+        /* Desktop responsive design */
+        @media (min-width: 1024px) {
+            body {
+                padding: 40px;
+            }
+
+            .container {
+                max-width: 1400px;
+                display: grid;
+                grid-template-columns: 250px 1fr;
+                grid-template-rows: auto 1fr;
+            }
+
+            .header {
+                grid-column: 1 / -1;
+                padding: 50px 40px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header p {
+                font-size: 18px;
+            }
+
+            .nav {
+                grid-column: 1;
+                grid-row: 2;
+                flex-direction: column;
+                position: sticky;
+                top: 0;
+                align-self: start;
+                max-height: calc(100vh - 100px);
+                overflow-y: auto;
+                border-bottom: none;
+                border-right: 1px solid #e2e8f0;
+            }
+
+            .nav button {
+                min-width: unset;
+                padding: 20px 24px;
+                text-align: left;
+                border-bottom: none;
+                border-left: 4px solid transparent;
+                font-size: 15px;
+            }
+
+            .nav button.active {
+                border-bottom: none;
+                border-left-color: #0ea5e9;
+                transform: translateX(2px);
+            }
+
+            .nav button.active::after {
+                display: none;
+            }
+
+            .content {
+                grid-column: 2;
+                grid-row: 2;
+                padding: 40px;
+                max-height: unset;
+            }
+
+            /* Multi-column card layout for Options Menu */
+            .options-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .options-grid .card {
+                margin-bottom: 0;
+            }
+
+            /* Larger cards on desktop */
+            .card {
+                padding: 24px;
+            }
+
+            h2 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                font-size: 22px;
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+
+            /* Decision helper layout */
+            .decision-helper {
+                padding: 30px;
+            }
+
+            .question {
+                padding: 24px;
+            }
+        }
+
+        /* Tablet responsive design */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .content {
+                padding: 35px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            /* Two-column layout for some cards on tablet */
+            .options-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .options-grid .card {
+                margin-bottom: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -789,6 +917,7 @@
                 </div>
 
                 <h3>🎢 Long Island Attractions (Optional)</h3>
+                <div class="options-grid">
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div style="flex: 1;">
@@ -906,6 +1035,7 @@
                         </div>
                         <div style="font-size: 40px; margin-left: 10px;">🦌</div>
                     </div>
+                </div>
                 </div>
 
                 <h3>🏠 Easy/Rest Day Options</h3>
