@@ -571,16 +571,17 @@
     </style>
 </head>
 <body>
+    <!-- Edit Mode Controls (outside container so they're always visible) -->
+    <div class="edit-notice">✏️ Edit Mode Active - Click any text to edit</div>
+    <div class="edit-controls">
+        <button class="edit-btn" id="editToggle" onclick="toggleEditMode()">✏️ Edit Mode</button>
+        <button class="edit-btn save" id="saveBtn" onclick="saveChanges()" style="display: none;">💾 Save</button>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>🗽 NY Trip Planner</h1>
             <p>June 28 - July 11, 2026 • Merrick, Long Island</p>
-        </div>
-
-        <div class="edit-notice">✏️ Edit Mode Active - Click any text to edit</div>
-        <div class="edit-controls">
-            <button class="edit-btn" id="editToggle" onclick="toggleEditMode()">✏️ Edit Mode</button>
-            <button class="edit-btn save" id="saveBtn" onclick="saveChanges()" style="display: none;">💾 Save</button>
         </div>
 
         <div class="nav">
