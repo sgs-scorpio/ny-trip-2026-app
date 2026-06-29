@@ -345,6 +345,82 @@
             font-weight: 500;
         }
 
+        /* Edit Mode Styles */
+        .edit-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s;
+        }
+
+        .edit-btn:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5);
+        }
+
+        .edit-btn.active {
+            background: #f59e0b;
+        }
+
+        .edit-btn.save {
+            background: #10b981;
+        }
+
+        .edit-btn.save:hover {
+            background: #059669;
+        }
+
+        .editable {
+            outline: 2px dashed transparent;
+            padding: 2px;
+            transition: outline 0.2s;
+            cursor: text;
+        }
+
+        body.edit-mode .editable {
+            outline: 2px dashed #f59e0b;
+            background: #fffbeb;
+        }
+
+        body.edit-mode .editable:hover {
+            outline: 2px solid #f59e0b;
+            background: #fef3c7;
+        }
+
+        .edit-notice {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f59e0b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 201;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            display: none;
+        }
+
+        body.edit-mode .edit-notice {
+            display: block;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -501,6 +577,12 @@
             <p>June 28 - July 11, 2026 • Merrick, Long Island</p>
         </div>
 
+        <div class="edit-notice">✏️ Edit Mode Active - Click any text to edit</div>
+        <div class="edit-controls">
+            <button class="edit-btn" id="editToggle" onclick="toggleEditMode()">✏️ Edit Mode</button>
+            <button class="edit-btn save" id="saveBtn" onclick="saveChanges()" style="display: none;">💾 Save</button>
+        </div>
+
         <div class="nav">
             <button class="nav-btn active" data-section="overview">Overview</button>
             <button class="nav-btn" data-section="calendar">📅 Calendar</button>
@@ -566,7 +648,7 @@
                 </div>
 
                 <h3>🔒 Locked Dates</h3>
-                <div class="card card-warning">
+                <div class="card card-warning editable" contenteditable="false" data-save-key="locked-dates">
                     <strong>June 30 (Tue):</strong> NYC Trip #1 - Train to NYC (Carmella or Jeremy)<br>
                     <strong>July 1 (Wed):</strong> Erica visit - Short catch-up in Long Beach<br>
                     <strong>July 2 (Thu):</strong> NYC Trip #2 + Eda arrives 5:40pm!<br>
@@ -598,7 +680,7 @@
                 </div>
 
                 <h3>Family Connections</h3>
-                <div class="card">
+                <div class="card editable" contenteditable="false" data-save-key="family-connections">
                     <strong>Eda (Michelle's Mom) + Bill:</strong> July 3-7 + morning of July 8 (from FL)<br>
                     - July 3: Visit Justine's (aunts may come) → 6:45pm dinner at Mill Pond Steak<br>
                     - July 4: Morning parade with Justine's family, afternoon at Christin's<br>
@@ -624,7 +706,7 @@
                 </div>
 
                 <h3>Friends to See</h3>
-                <div class="card">
+                <div class="card editable" contenteditable="false" data-save-key="friends-to-see">
                     <strong>NYC Friends:</strong>
                     <ul>
                         <li><strong>Carmella</strong> - Upper West Side</li>
@@ -1796,7 +1878,7 @@
                 </div>
 
                 <h3>🚨 Important Numbers</h3>
-                <div class="card card-warning">
+                <div class="card card-warning editable" contenteditable="false" data-save-key="important-numbers">
                     <strong>Emergency:</strong> 911<br>
                     <strong>Michelle's dad's cell:</strong> _______________<br>
                     <strong>Justine's cell:</strong> _______________<br>
@@ -1900,6 +1982,61 @@
             document.getElementById('suggestionText').innerHTML = suggestion;
             document.getElementById('suggestion').classList.add('show');
         }
+
+        // Edit Mode Functionality
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            document.body.classList.toggle('edit-mode');
+            const editBtn = document.getElementById('editToggle');
+            const saveBtn = document.getElementById('saveBtn');
+
+            if (editMode) {
+                editBtn.classList.add('active');
+                editBtn.textContent = '🔒 Lock';
+                saveBtn.style.display = 'block';
+
+                // Make editable elements contenteditable
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                });
+            } else {
+                editBtn.classList.remove('active');
+                editBtn.textContent = '✏️ Edit Mode';
+                saveBtn.style.display = 'none';
+
+                // Disable editing
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.setAttribute('contenteditable', 'false');
+                });
+            }
+        }
+
+        function saveChanges() {
+            // Save all editable content to localStorage
+            document.querySelectorAll('.editable[data-save-key]').forEach(el => {
+                const key = el.getAttribute('data-save-key');
+                const content = el.innerHTML;
+                localStorage.setItem(`trip-planner-${key}`, content);
+            });
+
+            alert('✅ Changes saved! Your edits will persist even after refreshing the page.');
+        }
+
+        function loadSavedChanges() {
+            // Load saved content from localStorage
+            document.querySelectorAll('.editable[data-save-key]').forEach(el => {
+                const key = el.getAttribute('data-save-key');
+                const saved = localStorage.getItem(`trip-planner-${key}`);
+                if (saved) {
+                    el.innerHTML = saved;
+                }
+            });
+        }
+
+        // Load saved changes on page load
+        window.addEventListener('DOMContentLoaded', loadSavedChanges);
     </script>
 </body>
 </html>
