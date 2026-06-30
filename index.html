@@ -347,25 +347,26 @@
 
         /* Edit Mode Styles */
         .edit-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 200;
-            display: flex;
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            z-index: 9999 !important;
+            display: flex !important;
             gap: 10px;
         }
 
         .edit-btn {
-            background: #0ea5e9;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
-            transition: all 0.3s;
+            background: #0ea5e9 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4) !important;
+            transition: all 0.3s !important;
+            white-space: nowrap !important;
         }
 
         .edit-btn:hover {
@@ -379,11 +380,19 @@
         }
 
         .edit-btn.save {
-            background: #10b981;
+            background: #10b981 !important;
         }
 
         .edit-btn.save:hover {
             background: #059669;
+        }
+
+        .edit-btn.cancel {
+            background: #ef4444 !important;
+        }
+
+        .edit-btn.cancel:hover {
+            background: #dc2626;
         }
 
         .editable {
@@ -594,6 +603,7 @@
     <div class="edit-controls">
         <button class="edit-btn" id="editToggle" onclick="toggleEditMode()">✏️ Edit Mode</button>
         <button class="edit-btn save" id="saveBtn" onclick="saveChanges()" style="display: none;">💾 Save</button>
+        <button class="edit-btn cancel" id="cancelBtn" onclick="cancelChanges()" style="display: none;">❌ Cancel</button>
     </div>
 
     <div class="container">
@@ -765,13 +775,13 @@
                     <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
                         <strong>Tue, June 30</strong> - Day 3<br>
                         <span style="color: #0ea5e9;">🗽 <strong>NYC TRIP #1 - CONFIRMED</strong></span><br>
-                        <small>Train 8:30am → See Carmella or Jeremy → Home 4pm</small>
+                        <small>Freeport LIRR ~8am → Times Square 9am → Magnolia Bakery → Central Park water play → Home 5-6pm</small>
                     </div>
 
                     <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
                         <strong>Wed, July 1</strong> - Day 4<br>
-                        <span style="color: #0ea5e9;">👥 <strong>ERICA VISIT - CONFIRMED</strong></span><br>
-                        <small>Short visit in Long Beach (morning or afternoon), pool otherwise</small>
+                        <span style="color: #0ea5e9;">🎾 <strong>PICKLEBALL + ERICA VISIT - CONFIRMED</strong></span><br>
+                        <small>8am: Pickleball with Mike | 10am: See Erica with family</small>
                     </div>
 
                     <div style="border-left: 4px solid #0ea5e9; padding-left: 16px; margin-bottom: 20px; padding-top: 4px; padding-bottom: 4px; background: #f0f9ff;">
@@ -1062,13 +1072,13 @@
                 <div class="card" style="cursor: pointer; transition: transform 0.2s;" onclick="alert('Swipe to NYC DAY 1 tab for full details!')">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div style="flex: 1;">
-                            <strong style="color: #0ea5e9; font-size: 16px;">Central Park + Carmella</strong>
-                            <p style="margin: 8px 0; line-height: 1.5;">Ancient Playground water play, meet Carmella for coffee. Leave 8:30am, home 4:30pm.</p>
-                            <span class="tag">~7 hours</span>
-                            <span class="tag">⚠️ Skip nap</span>
-                            <span class="tag">Check with Carmella first</span>
+                            <strong style="color: #0ea5e9; font-size: 16px;">Times Square, Magnolia Bakery & Central Park</strong>
+                            <p style="margin: 8px 0; line-height: 1.5;">Early Times Square, Magnolia cupcakes, Heckscher Playground for water play. Leave Freeport 8am, home 5-6pm.</p>
+                            <span class="tag">~8 hours</span>
+                            <span class="tag">Water play!</span>
+                            <span class="tag">Tue, June 30</span>
                         </div>
-                        <div style="font-size: 40px; margin-left: 10px;">🌳</div>
+                        <div style="font-size: 40px; margin-left: 10px;">🗽</div>
                     </div>
                 </div>
 
@@ -1155,129 +1165,191 @@
 
             <!-- NYC DAY 1 SECTION -->
             <div class="section" id="nyc1">
-                <h2>NYC Day Trip 1: Central Park</h2>
+                <h2>NYC Day Trip 1: Times Square, Magnolia & Central Park</h2>
 
                 <div class="card card-highlight">
-                    <strong>Focus:</strong> Central Park water play + meet Carmella<br>
-                    <strong>Duration:</strong> ~7 hours (home by 4:30pm)<br>
-                    <strong>Skip nap:</strong> Yes - early bedtime tonight<br>
-                    <strong>Best day:</strong> Weekday (less crowded)
+                    <strong>Date:</strong> Tuesday, June 30, 2026<br>
+                    <strong>Focus:</strong> Times Square + Magnolia Bakery + Heckscher Playground water play<br>
+                    <strong>Station:</strong> Freeport LIRR (better train times)<br>
+                    <strong>Duration:</strong> ~8 hours (home by 5-6pm)<br>
+                    <strong>Kids:</strong> Sienna (5.5 yrs) & Viv (2.5 yrs in stroller)<br>
+                    <strong>Bonus option:</strong> Natural History Museum if too hot!
                 </div>
 
                 <h3>Schedule</h3>
                 <div class="card">
                     <div class="schedule">
                         <div class="schedule-item">
-                            <span class="time">8:30am</span>
+                            <span class="time">7:00am</span>
                             <div class="activity">
-                                <strong>LIRR from Merrick</strong>
-                                <small>Babylon Branch train to Penn Station (~45 min)</small>
+                                <strong>Breakfast in Merrick</strong>
+                                <small>Quick breakfast at home before heading out</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">9:20am</span>
+                            <span class="time">7:30am</span>
+                            <div class="activity">
+                                <strong>Drive to Freeport LIRR Station</strong>
+                                <small>Parking available at station ($5-10/day)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">~8:00am</span>
+                            <div class="activity">
+                                <strong>LIRR from Freeport → Penn Station</strong>
+                                <small>~45 min ride, ~$10-13 per person one-way (verify exact train time with MYmta app)</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">~8:45am</span>
                             <div class="activity">
                                 <strong>Arrive Penn Station</strong>
-                                <small>Take subway or taxi to Upper West Side</small>
+                                <small>Walk north on 7th Ave to Times Square (10 min, 0.5 miles)</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">10:00am</span>
+                            <span class="time">9:00am</span>
                             <div class="activity">
-                                <strong>Meet Carmella (optional)</strong>
-                                <small>Coffee/brunch near The Dakota (72nd & Central Park West)</small>
+                                <strong>TIMES SQUARE!</strong>
+                                <small>Perfect timing - minimal crowds! Photos at TKTS Red Steps, Duffy Square. Duration: 30-45 min</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">11:00am</span>
+                            <span class="time">9:45am</span>
                             <div class="activity">
-                                <strong>Enter Central Park</strong>
-                                <small>Walk through park toward Ancient Playground (East 85th St)</small>
+                                <strong>MAGNOLIA BAKERY</strong>
+                                <small>Rockefeller Center (50th St). Famous NYC cupcakes since 1996. Grab treats to eat in the park! Duration: 15-20 min</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">11:30am</span>
+                            <span class="time">10:15am</span>
                             <div class="activity">
-                                <strong>Ancient Playground - WATER PLAY!</strong>
-                                <small>Egyptian-themed playground with spray features. Let kids play as long as they want!</small>
+                                <strong>Walk to Central Park - Heckscher Playground</strong>
+                                <small>West 62nd St entrance. Easy 10-15 min walk north from Rockefeller Center. No taxi needed!</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">1:00pm</span>
+                            <span class="time">10:45am</span>
                             <div class="activity">
-                                <strong>Lunch in park</strong>
-                                <small>Picnic or nearby café. Change kids into dry clothes.</small>
+                                <strong>HECKSCHER PLAYGROUND - WATER PLAY!</strong>
+                                <small>Largest playground in Central Park with water features. Lots of shade, perfect for kids! Let them play as long as they want.</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">2:00pm</span>
+                            <span class="time">12:30pm</span>
                             <div class="activity">
-                                <strong>More park exploring</strong>
-                                <small>Bethesda Terrace, Bow Bridge, or just relax. Viv might nap in stroller.</small>
+                                <strong>Lunch in/near park</strong>
+                                <small>Picnic in shade, or nearby café on Central Park South. Change kids into dry clothes if needed.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">1:30pm</span>
+                            <div class="activity">
+                                <strong>OPTION A: More playground time</strong>
+                                <small>Stay at Heckscher if kids still having fun. Find shady spot. Viv might nap in stroller.</small>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">1:30pm</span>
+                            <div class="activity">
+                                <strong>OPTION B: Natural History Museum</strong>
+                                <small>79th St & Central Park West (15 min walk or quick taxi). Dinosaurs, ocean life, planetarium. $28 adults, kids under 2 free. GREAT for escaping heat!</small>
                             </div>
                         </div>
                         <div class="schedule-item">
                             <span class="time">2:45pm</span>
                             <div class="activity">
-                                <strong>Head to Penn Station</strong>
-                                <small>Subway or taxi back</small>
+                                <strong>Head back to Penn Station</strong>
+                                <small>Uber/taxi recommended (~$20, 15 min) to avoid tiring walk in heat</small>
                             </div>
                         </div>
                         <div class="schedule-item">
                             <span class="time">3:30pm</span>
                             <div class="activity">
-                                <strong>LIRR back to Merrick</strong>
+                                <strong>LIRR Penn Station → Freeport</strong>
                                 <small>Kids might nap on train</small>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">4:20pm</span>
+                            <span class="time">~4:30-5:30pm</span>
                             <div class="activity">
-                                <strong>Home!</strong>
+                                <strong>Back in Merrick!</strong>
                                 <small>Quick pool dip or rest, early dinner, early bedtime</small>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <h3>🎯 Other Kid-Friendly Options (If You Want to Mix It Up)</h3>
+                <div class="card">
+                    <strong style="color: #0ea5e9;">1. Natural History Museum ⭐ HIGHLY RECOMMENDED</strong><br>
+                    <small>79th St & Central Park West | $28 adults, kids under 2 free | 2-3 hours</small>
+                    <p style="margin: 8px 0;">Dinosaurs, ocean hall, planetarium. PERFECT for escaping heat! Very stroller-friendly. Sienna will love it.</p>
+
+                    <strong style="color: #0ea5e9;">2. Ancient Playground (East 85th St)</strong><br>
+                    <small>East side of park | Free | 1-2 hours</small>
+                    <p style="margin: 8px 0;">Egyptian-themed with BEST water spray features. Need taxi/Uber from Times Square (~$15, 15 min). Worth it for better water!</p>
+
+                    <strong style="color: #0ea5e9;">3. Central Park Zoo</strong><br>
+                    <small>64th St & 5th Ave | $19.95 adults, $14.95 kids | 1-2 hours</small>
+                    <p style="margin: 8px 0;">Small, manageable zoo. Sea lions, penguins, snow leopards. Very close to Heckscher Playground!</p>
+
+                    <strong style="color: #0ea5e9;">4. Conservatory Water (Boat Pond)</strong><br>
+                    <small>74th St, east side of park | Free | 30-60 min</small>
+                    <p style="margin: 8px 0;">Model sailboat pond. Rent boats or just watch. Peaceful, nice for stroller walk.</p>
+
+                    <strong style="color: #0ea5e9;">5. Belvedere Castle</strong><br>
+                    <small>Mid-park at 79th St | Free | 30 min</small>
+                    <p style="margin: 8px 0;">Small castle with views. Short visit, kids love castles! Stroller accessible.</p>
+
+                    <strong style="color: #0ea5e9;">6. Sheep Meadow</strong><br>
+                    <small>West side, 66th-69th St | Free</small>
+                    <p style="margin: 8px 0;">Huge open lawn. Perfect for running around, picnic, relaxing. Very close to Heckscher!</p>
+                </div>
+
                 <h3>What to Pack</h3>
                 <div class="card">
                     <ul class="checklist">
-                        <li>Swimsuits for both girls (wear under clothes)</li>
+                        <li>Swimsuits for both girls (wear under clothes for water play!)</li>
                         <li>2-3 towels</li>
                         <li>Complete change of clothes (both kids)</li>
                         <li>Extra diapers/pull-ups for Viv</li>
                         <li>Sunscreen (SPF 50+) - reapply every 2 hours!</li>
                         <li>Hats for both kids</li>
-                        <li>Snacks & water bottles (lots!)</li>
+                        <li>Water bottles (lots! - it's hot)</li>
+                        <li>Snacks (plenty!)</li>
                         <li>Stroller with sunshade</li>
-                        <li>Portable charger</li>
+                        <li>Portable charger for phones</li>
                         <li>Small first aid kit</li>
                         <li>Hand wipes/sanitizer</li>
                         <li>Plastic bag for wet clothes</li>
                         <li>Comfort item for Viv</li>
+                        <li>Cash for taxis/Uber and M&M purchases</li>
                     </ul>
                 </div>
 
                 <h3>Important Notes</h3>
                 <div class="card card-warning">
                     <ul>
-                        <li>⚠️ <strong>Carmella coordination:</strong> Confirm time/location 1-2 days before</li>
-                        <li>🌡️ Check weather - have backup plan if rain</li>
-                        <li>🚆 LIRR can be checked at: mta.info (check for any service changes)</li>
-                        <li>💳 Bring cash for any food carts in park</li>
-                        <li>🚻 Bathrooms: Available in park, but plan ahead</li>
-                        <li>🎒 Keep backpack light - you'll be carrying it all day</li>
-                        <li>📱 Screenshot this schedule offline just in case!</li>
+                        <li>📱 <strong>Download MYmta app</strong> for real-time LIRR schedules & alerts</li>
+                        <li>🚆 <strong>Verify train times</strong> at mta.info/lirr before you go</li>
+                        <li>🚶 <strong>Easy walk:</strong> Heckscher Playground is just 10-15 min walk from Times Square - very manageable!</li>
+                        <li>💦 <strong>Heckscher Playground:</strong> Largest playground in Central Park with water features. West 62nd St entrance.</li>
+                        <li>🏛️ <strong>Natural History Museum:</strong> Great backup if too hot! $28 adults, kids under 2 free. AC + dinosaurs = winner!</li>
+                        <li>📸 <strong>Times Square photos:</strong> Best light & fewest crowds before 10am</li>
+                        <li>🏢 <strong>Penn Station tip:</strong> Can be confusing - LIRR is downstairs, follow signs</li>
+                        <li>🧁 <strong>Magnolia Bakery:</strong> At Rockefeller Center. Famous NYC cupcakes - grab them to go for the park!</li>
+                        <li>🌡️ <strong>Heat strategy:</strong> Water play + shady park areas + museum option = happy kids!</li>
+                        <li>💰 <strong>Budget:</strong> LIRR ~$20-26/person + meals $20-40 + cupcakes/museum = ~$80-150 total</li>
                     </ul>
                 </div>
 
                 <h3>Backup Plans</h3>
                 <div class="card">
-                    <strong>If rain:</strong> Could do Natural History Museum instead (right near Ancient Playground)<br><br>
-                    <strong>If Carmella unavailable:</strong> Go straight to park, more time there<br><br>
-                    <strong>If kids meltdown:</strong> Leave early, catch earlier train home<br><br>
-                    <strong>If too crowded:</strong> Find quieter part of Central Park, still fun
+                    <strong>If rain:</strong> Times Square & Magnolia Bakery are indoors. Go to Natural History Museum instead of park - perfect rainy day plan!<br><br>
+                    <strong>If too hot:</strong> Do Natural History Museum after Magnolia (AC + dinosaurs!). Skip outdoor playground.<br><br>
+                    <strong>If kids meltdown:</strong> Leave early, catch earlier train home. It's totally okay!<br><br>
+                    <strong>If playground too crowded:</strong> Try Ancient Playground (taxi needed) or Central Park Zoo, or just explore Sheep Meadow
                 </div>
             </div>
 
@@ -1896,16 +1968,6 @@
                     </ul>
                 </div>
 
-                <h3>🚨 Important Numbers</h3>
-                <div class="card card-warning editable" contenteditable="false" data-save-key="important-numbers">
-                    <strong>Emergency:</strong> 911<br>
-                    <strong>Michelle's dad's cell:</strong> _______________<br>
-                    <strong>Justine's cell:</strong> _______________<br>
-                    <strong>Carmella's cell:</strong> _______________<br>
-                    <strong>Jeremy's cell:</strong> _______________<br>
-                    <strong>Local urgent care:</strong> _______________
-                </div>
-
                 <h3>💡 Pro Tips</h3>
                 <div class="card card-success">
                     <ul>
@@ -2010,11 +2072,13 @@
             document.body.classList.toggle('edit-mode');
             const editBtn = document.getElementById('editToggle');
             const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
 
             if (editMode) {
                 editBtn.classList.add('active');
                 editBtn.textContent = '🔒 Lock';
                 saveBtn.style.display = 'block';
+                cancelBtn.style.display = 'block';
 
                 // Make editable elements contenteditable
                 document.querySelectorAll('.editable').forEach(el => {
@@ -2024,6 +2088,7 @@
                 editBtn.classList.remove('active');
                 editBtn.textContent = '✏️ Edit Mode';
                 saveBtn.style.display = 'none';
+                cancelBtn.style.display = 'none';
 
                 // Disable editing
                 document.querySelectorAll('.editable').forEach(el => {
@@ -2041,6 +2106,30 @@
             });
 
             alert('✅ Changes saved! Your edits will persist even after refreshing the page.');
+        }
+
+        function cancelChanges() {
+            // Reload saved content from localStorage (discards unsaved edits)
+            loadSavedChanges();
+
+            // Exit edit mode
+            editMode = false;
+            document.body.classList.remove('edit-mode');
+            const editBtn = document.getElementById('editToggle');
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            editBtn.classList.remove('active');
+            editBtn.textContent = '✏️ Edit Mode';
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+
+            // Disable editing
+            document.querySelectorAll('.editable').forEach(el => {
+                el.setAttribute('contenteditable', 'false');
+            });
+
+            alert('❌ Changes discarded. Content restored to last saved version.');
         }
 
         function loadSavedChanges() {
